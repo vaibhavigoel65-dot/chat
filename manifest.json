@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "GEM Product Exporter",
+  "version": "10.0",
+  "description": "Export GEM product listings to one cumulative Excel sheet. Runs in a separate window.",
+  "permissions": ["activeTab", "scripting", "downloads", "storage", "tabs", "windows", "alarms"],
+  "host_permissions": ["https://gem.gov.in/*", "https://mkp.gem.gov.in/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://gem.gov.in/*", "https://mkp.gem.gov.in/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

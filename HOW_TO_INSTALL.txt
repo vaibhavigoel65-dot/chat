@@ -1,0 +1,37 @@
+HOW TO INSTALL GEM PRODUCT EXPORTER (Chrome Extension)
+========================================================
+
+INSTALL (One Time Only)
+------------------------
+1. Extract this ZIP folder anywhere on your PC (Desktop is fine)
+2. Open Chrome
+3. Go to:  chrome://extensions
+4. Top-right corner — turn ON "Developer mode"
+5. Click "Load unpacked"
+6. Select the extracted folder (gem_extension)
+7. Done — you'll see "GEM Product Exporter" icon in Chrome toolbar
+
+HOW TO USE (Every Time)
+------------------------
+1. Log in to GEM as usual (gem.gov.in)
+2. Search for your product and navigate to the brand's product listing page
+3. Click the GEM Exporter icon in Chrome toolbar (top-right)
+4. Enter Brand Name and Product/Search Term
+5. Click "Start Export"
+6. Extension automatically opens each product page, reads all specs, and downloads a CSV file
+7. Open the CSV in Excel — it contains all product details
+
+OUTPUT FILE
+-----------
+- Saved to your Downloads folder automatically
+- Named: GEM_BrandName_ProductName_Date.csv
+- Open in Excel: File opens correctly with all specs in columns
+- Row 1: Brand, product, count, date
+- Row 2: Column headers
+- Row 3+: One product per row
+
+NOTES
+-----
+- Do NOT close the browser tab or click around while it's running
+- The extension reads page content only — your login/password is never accessed
+- If 0 products found: make sure you're on a LISTING page (multiple products visible), not a single product page
