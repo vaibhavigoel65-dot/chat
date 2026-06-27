@@ -82,3 +82,124 @@ startBtn.addEventListener('click', async () => {
     startBtn.textContent = '⏳ Running in background...';
   });
 });
+document.getElementById("debugBtn").addEventListener("click", async () => {
+
+    const [tab] = await chrome.tabs.query({
+        active: true,
+        currentWindow: true
+    });
+
+    chrome.scripting.executeScript({
+
+        target: {
+            tabId: tab.id
+        },
+
+        func: debugDOM
+
+    });
+
+});
+function debugDOM() {
+
+    const report = {};
+
+    report.url = location.href;
+
+    report.title = document.title;
+
+    report.totalLinks =
+        document.querySelectorAll("a").length;
+
+    report.tables =
+        document.querySelectorAll("table").length;
+
+    report.forms =
+        document.querySelectorAll("form").length;
+
+    report.buttons =
+        [...document.querySelectorAll("button")]
+        .map(x => x.innerText.trim());
+
+    report.inputs =
+        [...document.querySelectorAll("input")]
+        .map(x => ({
+            type: x.type,
+            placeholder: x.placeholder,
+            class: x.className
+        }));
+
+    report.productCards =
+        [...document.querySelectorAll("*")]
+        .filter(e =>
+            e.querySelector("a[href*='-cat']")
+        )
+        .slice(0,50)
+        .map(e=>({
+
+            tag:e.tagName,
+
+            class:e.className,
+
+            id:e.id,
+
+            text:e.innerText.substring(0,150)
+
+        }));
+
+    report.pagination =
+        [...document.querySelectorAll("*")]
+        .filter(e=>
+
+            /next|page|pagination|pager/i.test(
+
+                e.className+
+
+                e.id+
+
+                e.innerText
+
+            )
+
+        )
+
+        .map(e=>({
+
+            tag:e.tagName,
+
+            class:e.className,
+
+            text:e.innerText
+
+        }));
+
+    report.tablesHTML =
+        [...document.querySelectorAll("table")]
+
+        .slice(0,10)
+
+        .map(t=>t.outerHTML);
+
+    console.log(report);
+
+    const blob=new Blob(
+
+        [JSON.stringify(report,null,2)],
+
+        {
+
+            type:"application/json"
+
+        }
+
+    );
+
+    const a=document.createElement("a");
+
+    a.href=URL.createObjectURL(blob);
+
+    a.download="gem_debug_report.json";
+
+    a.click();
+
+}
